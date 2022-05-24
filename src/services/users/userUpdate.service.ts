@@ -12,7 +12,7 @@ const userUpdateService = async ({id,name, email, password,age}:IUserUpdate) => 
     const account = users.find(user => user.id ===id)
 
     const emailAlredyExists = users.find(user => user.email===email)
-    
+
 
     if(bcrypt.compareSync(password,account!.password)) {
         throw new Error ("Password does not match.")
@@ -20,7 +20,7 @@ const userUpdateService = async ({id,name, email, password,age}:IUserUpdate) => 
 
     const newPassword = bcrypt.hashSync(password,10)
 
-    await userRepository.update(account!.id, {name:name,email:email, age:age, password:newPassword});
+    await userRepository.update(account!.id, {name:name,email:email, age:age, password:newPassword, updatedAt:new Date()});
 
     return true
 }
